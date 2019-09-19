@@ -1,6 +1,6 @@
-package com.trgt.cmoderator.service;
+package com.clay.cmoderator.service;
 
-import com.trgt.cmoderator.model.CommentFeedback;
+import com.clay.cmoderator.model.CommentFeedback;
 
 public interface CommentValidatorService {
 

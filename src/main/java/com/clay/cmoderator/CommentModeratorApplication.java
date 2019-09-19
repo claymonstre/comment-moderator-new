@@ -1,4 +1,4 @@
-package com.trgt.cmoderator;
+package com.clay.cmoderator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

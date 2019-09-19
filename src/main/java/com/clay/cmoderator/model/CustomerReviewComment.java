@@ -1,4 +1,4 @@
-package com.trgt.cmoderator.model;
+package com.clay.cmoderator.model;
 
 public class CustomerReviewComment {
     private String comment;

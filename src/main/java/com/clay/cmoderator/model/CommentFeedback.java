@@ -1,19 +1,21 @@
-package com.trgt.cmoderator.model;
+package com.clay.cmoderator.model;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommentFeedback {
-    private List<String> badwordsUsed;
+    private List<String> includedBadwords;
     private String category;
     private boolean isBadwordUsed;
-    private String description;
 
-    public List<String> getBadwordsUsed() {
-        return badwordsUsed;
+    public List<String> getIncludedBadwords() {
+        return includedBadwords;
     }
 
-    public void setBadwordsUsed(List<String> badwordsUsed) {
-        this.badwordsUsed = badwordsUsed;
+    public void setIncludedBadwords(List<String> includedBadwords) {
+        this.includedBadwords = includedBadwords;
     }
 
     public String getCategory() {
@@ -25,10 +27,11 @@ public class CommentFeedback {
     }
 
     public boolean isBadwordUsed() {
-        return !badwordsUsed.isEmpty();
+        return !includedBadwords.isEmpty();
     }
 
     public void setBadwordUsed(boolean badwordUsed) {
         isBadwordUsed = badwordUsed;
     }
+
 }
