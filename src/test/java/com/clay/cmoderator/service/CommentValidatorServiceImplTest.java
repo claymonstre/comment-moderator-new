@@ -11,7 +11,9 @@ public class CommentValidatorServiceImplTest {
 
     @Before
     public void init() {
-        commentValidatorService = new CommentValidatorServiceImpl();
+
+        FileWordLoader fileWordLoader = new FileWordLoader();
+        commentValidatorService = new CommentValidatorServiceImpl(fileWordLoader);
     }
 
     @Test
@@ -39,4 +41,5 @@ public class CommentValidatorServiceImplTest {
         Assert.assertEquals(false, commentFeedback.isBadwordUsed());
         Assert.assertEquals(0, commentFeedback.getIncludedBadwords().size());
     }
+
 }

@@ -20,6 +20,8 @@ public class CommentModeratorController {
     @PostMapping(path = "/validate")
     public ResponseEntity<CommentFeedback> validateCustomerComment(@RequestBody CustomerReviewComment reviewComment) {
 
-        return ResponseEntity.ok().body(commentValidatorService.validateComment(reviewComment.getComment()));
+        return ResponseEntity.ok()
+                .body(commentValidatorService
+                        .validateComment(reviewComment.getComment()));
     }
 }

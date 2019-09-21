@@ -1,8 +1,14 @@
 package com.clay.cmoderator.service;
 
+import static com.clay.cmoderator.util.ValidationConstant.BAD_WORD_FILE_PATH;
+import static com.clay.cmoderator.util.ValidationConstant.BLANK_SPACE;
+
 import com.clay.cmoderator.model.CommentFeedback;
+import com.clay.cmoderator.util.ValidationConstant;
+import com.clay.cmoderator.util.ValidatorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -18,18 +24,20 @@ public class CommentValidatorServiceImpl implements CommentValidatorService {
 
     private Logger log = LoggerFactory.getLogger(getClass().getName());
 
-    final private List<String> badwordDictionary = new ArrayList<>();
-    private static final String BAD_WORD_FILE_PATH = "src/test/resources/static/badwords.txt";
-    private static final String BLANK_SPACE = " ";
+    private List<String> badwordDictionary = new ArrayList<>();
+
+    private FileWordLoader fileWordLoader;
+
+    CommentValidatorServiceImpl(FileWordLoader fileWordLoader){
+        this.fileWordLoader =  fileWordLoader;
+    }
 
     @Override
     public CommentFeedback validateComment(String comment) {
-        loadBadwords();
+        //loadBadwords();
+        badwordDictionary = fileWordLoader.loadWords();
 
-        String filteredComment = comment.trim()
-                .replaceAll("[^a-zA-Z\\s]", "")
-                .replaceAll(" +", BLANK_SPACE)
-                .toLowerCase();
+        String filteredComment = ValidatorUtil.filterComment(comment);
         CommentFeedback commentFeedback = new CommentFeedback();
 
         List<String> usedBadwords = Stream.of(filteredComment.split(BLANK_SPACE))
@@ -40,18 +48,5 @@ public class CommentValidatorServiceImpl implements CommentValidatorService {
         commentFeedback.setCategory("Profanity");
 
         return commentFeedback;
-    }
-
-    protected void loadBadwords() {
-        try {
-            List<String> badwords = Files.readAllLines(Paths.get(BAD_WORD_FILE_PATH));
-            badwordDictionary.addAll(
-                    badwords.stream()
-                            .map(word -> word.toLowerCase())
-                            .collect(Collectors.toList())
-            );
-        } catch (IOException e) {
-            log.error("Error while reading file {}", e.getMessage());
-        }
     }
 }
